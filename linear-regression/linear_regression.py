@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 
 def cost(x, theta, y):
@@ -18,3 +19,17 @@ def gradient_descent(x, theta, y, alpha, iterations):
 
 def predict(x, theta):
     return np.dot(x, theta)[0, 0]
+
+
+def normalize(x):
+    return (x - x.mean())/x.std(), x.mean(), x.std()
+
+
+def plot_cost(j_vals):
+    print('Displaying cost history...')
+    plt.plot(j_vals)
+    plt.title('Cost History over 1500 iterations of GD')
+    plt.legend('J')
+    plt.xlabel('N° Iterations')
+    plt.ylabel('Cost')
+    plt.show()

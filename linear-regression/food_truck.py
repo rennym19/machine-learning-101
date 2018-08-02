@@ -2,11 +2,11 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import style
-from linear_regression import *
+import linear_regression as linear
 
 
 def predict_profit(population, params, print_msg=True):
-    prediction = predict(np.array([[1, population/10000]]), params)
+    prediction = linear.predict(np.array([[1, population/10000]]), params)
     if print_msg:
         print('For a population of {0}, we predict a profit of {1}'.format(population, prediction * 10000))
     return prediction
@@ -33,25 +33,19 @@ def start():
     y = np.array(y)
     theta = np.zeros((x.shape[1], 1))
 
-    print('Cost with theta [0; 0]: {0}'.format(cost(x, theta, y)))
-    print('Cost with theta [-1; 2]: {0}'.format(cost(x, np.array([[-1], [2]]), y)))
+    print('Cost with theta [0; 0]: {0}'.format(linear.cost(x, theta, y)))
+    print('Cost with theta [-1; 2]: {0}'.format(linear.cost(x, np.array([[-1], [2]]), y)))
 
     # Setting hyperparameters before running gradient descent
     alpha = 0.01
     iterations = 1500
 
     # Run gradient descent to minimize the error
-    j_vals, new_theta = gradient_descent(x, theta, y, alpha, iterations)
+    j_vals, new_theta = linear.gradient_descent(x, theta, y, alpha, iterations)
     print('\nNew theta: [{0}; {1}]\n'.format(new_theta[0][0], new_theta[1][0]))
 
     # Plotting cost history
-    print('Displaying cost history...')
-    plt.plot(j_vals)
-    plt.title('Cost History over 1500 iterations of GD')
-    plt.legend('J')
-    plt.xlabel('N° Iterations')
-    plt.ylabel('Cost')
-    plt.show()
+    linear.plot_cost(j_vals)
 
     # Plotting Line of Best Fit
     print('Displaying line of best fit...')
