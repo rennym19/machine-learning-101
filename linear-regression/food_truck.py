@@ -29,8 +29,8 @@ def start():
 
     # Add intercept (bias) column to x and check initial cost with all params = 0
     x.insert(0, 'Intercept', 1)
-    x = np.array(x)
-    y = np.array(y)
+    x = x.values
+    y = y.values
     theta = np.zeros((x.shape[1], 1))
 
     print('Cost with theta [0; 0]: {0}'.format(linear.cost(x, theta, y)))
@@ -41,7 +41,7 @@ def start():
     iterations = 1500
 
     # Run gradient descent to minimize the error
-    j_vals, new_theta = linear.gradient_descent(x, theta, y, alpha, iterations)
+    new_theta, j_vals = linear.gradient_descent(x, theta, y, alpha, iterations)
     print('\nNew theta: [{0}; {1}]\n'.format(new_theta[0][0], new_theta[1][0]))
 
     # Plotting cost history
@@ -50,7 +50,7 @@ def start():
     # Plotting Line of Best Fit
     print('Displaying line of best fit...')
     plt.scatter(x[:, 1], y[:, 0], color='red', marker='.')
-    plt.plot(x[:, 1], np.dot(x, theta))
+    plt.plot(x[:, 1], np.dot(x, new_theta))
     plt.xlabel('Population in 10,000s')
     plt.ylabel('Profits in $ 10,000s')
     plt.show()
